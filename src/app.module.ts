@@ -2,15 +2,20 @@ import { Module, CacheModule } from '@nestjs/common';
 import { UsersModule } from './users/users.module';
 import { RedisCacheModule } from './redis-cache/redis-cache.module';
 import { ConfigModule } from '@nestjs/config';
-import configuration from './config/configuration';
-
+import { EnvConfiguration } from './config/app.config';
+import { RequestLibraryModule } from '@app/request-library';
+import { RequestLibraryService } from '@app/request-library';
 @Module({
   imports: [
-    UsersModule, 
-    RedisCacheModule,
     ConfigModule.forRoot({
       isGlobal: true,
-      load: [configuration]
+      load: [EnvConfiguration]
+    }),
+    UsersModule, 
+    RedisCacheModule,
+    RequestLibraryModule.forRoot({
+      client: 'Axios',
+      timeOut: 5000
     })
   ],
   controllers: [],

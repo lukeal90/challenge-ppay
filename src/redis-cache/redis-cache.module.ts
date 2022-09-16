@@ -6,12 +6,12 @@ import { ConfigModule } from '@nestjs/config';
 
 @Module({
     imports: [
-        ConfigModule,
-        CacheModule.register({ 
+        CacheModule.register({
             store: redisStore,
-            host: 'localhost',
-            port: 6379,
-            ttl: 120
+            host: process.env.HOST,
+            port: process.env.REDIS_PORT,
+            // preguntar lo del env
+            ttl:  120
           })        
     ],
     providers: [RedisCacheService],

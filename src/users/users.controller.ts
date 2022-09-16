@@ -1,3 +1,4 @@
+import { RequestLibraryService } from '@app/request-library/request-library.service';
 import { 
   Body, 
   Controller, 
@@ -11,11 +12,13 @@ import { UsersService } from './users.service';
 @Controller('users')
 export class UsersController {
 
-  constructor( private readonly userService: UsersService){}
+  constructor( private readonly userService: UsersService,
+    private httpClient: RequestLibraryService){}
 
   @Get()
   getUsers() {
-    return this.userService.getUsers();
+    console.log("entro")
+    return this.httpClient.get("https://jsonplaceholder.typicode.com/todos");
   }
 
   @Post()
